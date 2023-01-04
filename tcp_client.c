@@ -11,6 +11,28 @@
 
 #define PORT 8010
 
+/*********************************
+ * 
+ * Compiled program takes in one argument--
+ * the path to the Python file that
+ * openstartracker will execute.
+ * 
+ * Connects to port 8010 on local machine (same
+ * port used as default in openstartracker
+ * Python script) via sockets. Then,
+ * instructs openstartracker to run the Python
+ * file passed in as argument. (Note that
+ * any Python code sent to openstartracker to
+ * be executed can access all function, classes,
+ * etc. in the startracker.py script).
+ *
+ * Then, spins in an infinite loop, waiting for
+ * data from openstartracker (note that anything
+ * openstartracker prints to stdout is sent back
+ * to this program). Prints this data out.
+ * 
+ *********************************/
+
 void
 write_to_server (int filedes, char *msg)
 {
