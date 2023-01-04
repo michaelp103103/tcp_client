@@ -29,7 +29,7 @@ main (int argc, char *argv[])
 {
   if (argc < 2)
   {
-    printf ("Error: Must pass path to python file as argument. openstartracker will execute this python file\n\n");
+    printf ("Usage: %s py_script\n\npy_script -- path to Python script that openstartracker will execute.\n\n", argv[0]);
     exit (EXIT_FAILURE);
   }
   
@@ -60,19 +60,23 @@ main (int argc, char *argv[])
 	    argv[1], argv[1]);
   write_to_server (network_socket, server_msg);
 
-  /* receive data from the server */
-  char server_response[256];
-  nbytes = recv (network_socket, &server_response, sizeof (server_response), 0);
-  if (nbytes < 0)
+  printf ("The server sent the data:\n\n");
+  while (1)
   {
-    /* read error */
-    perror ("read");
-    exit (EXIT_FAILURE);
-  }
+    /* receive data from the server */
+    char server_response[256];
+    nbytes = recv (network_socket, &server_response, sizeof (server_response), 0);
+    if (nbytes < 0)
+    {
+      /* read error */
+      perror ("read");
+      exit (EXIT_FAILURE);
+    }
 
-  /* print out the server's response */
-  printf ("The server sent the data:\n\n%s\n", server_response);
-    
+    /* print out the server's response */
+    printf ("%s\n", server_response);
+  }
+      
   close (network_socket);
   exit (EXIT_SUCCESS);
 }
